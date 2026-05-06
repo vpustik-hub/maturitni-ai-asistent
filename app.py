@@ -9,26 +9,11 @@ st.set_page_config(page_title="AI Maturant", page_icon="🎓", layout="wide")
 # --- KONFIGURACE AI (KLÍČ) ---
 if "GOOGLE_API_KEY" in st.secrets:
     genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
-    
-    # Zkusíme postupně všechny varianty názvů, které v ČR fungují
-    uspesne_nastaveno = False
-    for model_name in ['gemini-1.5-flash', 'gemini-1.5-flash-latest', 'gemini-pro', 'models/gemini-1.5-flash']:
-        try:
-            model = genai.GenerativeModel(model_name)
-            # Zkusíme krátký test, jestli model opravdu odpovídá
-            model.generate_content("test")
-            uspesne_nastaveno = True
-            break # Pokud to projde, přestaneme hledat
-        except:
-            continue
-            
-    if not uspesne_nastaveno:
-        st.error("Žádný z modelů Gemini nebyl nalezen. Zkontroluj, zda je tvůj API klíč aktivní v Google AI Studio.")
-        st.stop()
+    # Tato verze je v ČR nejstabilnější
+    model = genai.GenerativeModel('gemini-1.5-flash')
 else:
     st.error("Chybí API klíč v Secrets!")
     st.stop()
-
 # --- PAMĚŤ APLIKACE ---
 if "knihovna" not in st.session_state:
     st.session_state.knihovna = {}

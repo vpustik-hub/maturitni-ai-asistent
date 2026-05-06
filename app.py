@@ -20,13 +20,11 @@ if "knihovna" not in st.session_state:
 
 # --- FUNKCE PRO ZPRACOVÁNÍ TEXTU ---
 def zpracuj_text_pomoci_ai(raw_text):
-    prompt = f"""
-    Jsi expert na tvorbu studijních materiálů. Tvým úkolem je vzít syrový text z PDF a přeformátovat ho.
-    Hledej hlavní maturitní otázky a jejich podbody (odrážky).
-    Výstup vrať v Markdown formátu (nadpisy pomocí ##, podbody pomocí - ).
-    Text k analýze:
-    {raw_text[:8000]}
-    """
+    # Omezíme délku textu, aby to nebylo moc dlouhé pro free verzi
+    zkraceny_text = raw_text[:5000]
+    prompt = f"Udělej osnovu z tohoto textu (použij odrážky): {zkraceny_text}"
+    
+    # Voláme model
     response = model.generate_content(prompt)
     return response.text
 

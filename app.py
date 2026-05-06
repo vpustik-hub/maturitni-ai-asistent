@@ -9,7 +9,7 @@ st.set_page_config(page_title="AI Maturant", page_icon="🎓", layout="wide")
 # --- KONFIGURACE AI (KLÍČ) ---
 if "GOOGLE_API_KEY" in st.secrets:
     genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    model = genai.GenerativeModel('models/gemini-1.5-flash')
 else:
     st.error("Chybí API klíč! Vlož ho do Streamlit Secrets jako GOOGLE_API_KEY.")
     st.stop()
